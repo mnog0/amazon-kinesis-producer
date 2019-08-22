@@ -100,12 +100,12 @@ public class SampleProducer {
     /**
      * Change this to your stream name.
      */
-    public static final String STREAM_NAME = "test";
+    public static final String STREAM_NAME = "xonqa-aws-kds-t10";
     
     /**
      * Change this to the region you are using.
      */
-    public static final String REGION = "us-west-1";
+    public static final String REGION = "ap-northeast-1";
 
     /**
      * Here'll walk through some of the config options and create an instance of
