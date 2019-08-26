@@ -58,8 +58,8 @@ public class Utils {
 
         final String to = "to_xon_test_account@xon.local";
         final String from = "from_xon_test_account@xon.local";
-        final String charset = "ISO-2022-JP";
-        //final String charset = "UTF-8";
+        //final String charset = "ISO-2022-JP";
+        final String charset = "UTF-8";
         final String encoding = "base64";
 
         String subject = "JavaMail テストメール";
