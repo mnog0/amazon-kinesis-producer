@@ -19,17 +19,6 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.Random;
-//import java.util.Properties;
-//import java.util.Date;
-
-//import javax.mail.Session;
-//import javax.mail.Address;
-//import javax.mail.internet.InternetAddress;
-//import javax.mail.internet.MimeMessage;
-//import javax.mail.PasswordAuthentication;
-//import javax.mail.internet.AddressException;
-//import javax.mail.MessagingException;
-//import javax.mail.Message;
 
 public class Utils {
     private static final Random RANDOM = new Random();
@@ -58,7 +47,6 @@ public class Utils {
         StringBuilder sb = new StringBuilder();
         sb.append(Long.toString(sequenceNumber));
         sb.append(" ");
-        //sb.append(generateMessage(sequenceNumber));
         while (sb.length() < totalLen) {
             sb.append("a");
         }
@@ -67,42 +55,5 @@ public class Utils {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static String generateMessage(long sequenceNumber) {
-        try {
-            String crlf = ""; //System.getProperty("line.separator");
-            String message =
-                "HELO myhostname.hogehoge.co.jp" + crlf +
-                "MAIL FROM: username@hogehoge.co.jp" + crlf +
-                "RCPT TO: abcedfgh@hogehoge.co.jp" + crlf +
-                "DATA" + crlf +
-                "To: abcdefgh@hogehoge.co.jp" + crlf +
-                "Subject: test mail no " + Long.toString(sequenceNumber) + crlf +
-                "From: username@hogehoge.co.jp" + crlf + crlf +
-                "this is test mail." + crlf + crlf +
-                "ダミーデータなので返信はしないでください。" + crlf +
-                "." + crlf +
-                "QUIT" + crlf
-                ;
-            return message;
-            /*
-            Properties prop = new Properties();
-            prop.put("mail.smtp.host", "localhost");
-            prop.put("mail.smtp.port", "25");
-            Session session = Session.getDefaultInstance(prop);
-            MimeMessage mime = new MimeMessage(session);
-            mime.addFrom(InternetAddress.parse(from));
-            Address[] tos = { new InternetAddress(to) };
-            mime.setRecipients(Message.RecipientType.TO, tos);
-            mime.setSubject(subject, "iso-2022-jp");
-            mime.setText(text);
-            mime.setSentDate(new Date());
-            return mime.toString();
-            */
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

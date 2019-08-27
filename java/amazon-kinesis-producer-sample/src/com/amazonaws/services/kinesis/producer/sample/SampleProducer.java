@@ -35,8 +35,6 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * The Kinesis Producer Library (KPL) excels at handling large numbers of small
  * logical records by combining multiple logical records into a single Kinesis
@@ -213,7 +211,6 @@ public class SampleProducer {
             @Override
             public void run() {
                 ByteBuffer data = Utils.generateData(sequenceNumber.get(), DATA_SIZE);
-                //log.info(StandardCharsets.UTF_8.decode(data).toString());
                 // TIMESTAMP is our partition key
                 ListenableFuture<UserRecordResult> f =
                         producer.addUserRecord(STREAM_NAME, TIMESTAMP, Utils.randomExplicitHashKey(), data);
