@@ -19,17 +19,17 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.Random;
-import java.util.Properties;
-import java.util.Date;
+//import java.util.Properties;
+//import java.util.Date;
 
-import javax.mail.Session;
-import javax.mail.Address;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+//import javax.mail.Session;
+//import javax.mail.Address;
+//import javax.mail.internet.InternetAddress;
+//import javax.mail.internet.MimeMessage;
 //import javax.mail.PasswordAuthentication;
 //import javax.mail.internet.AddressException;
 //import javax.mail.MessagingException;
-import javax.mail.Message;
+//import javax.mail.Message;
 
 public class Utils {
     private static final Random RANDOM = new Random();
@@ -55,21 +55,11 @@ public class Utils {
      * @return ByteBuffer containing the blob
      */
     public static ByteBuffer generateData(long sequenceNumber, int totalLen) {
-
-        final String to = "to_xon_test_account@xon.local";
-        final String from = "from_xon_test_account@xon.local";
-        //final String charset = "ISO-2022-JP";
-        final String charset = "UTF-8";
-        final String encoding = "base64";
-
-        String subject = "JavaMail テストメール";
-        String context = "テストメールの本文";
-
         StringBuilder sb = new StringBuilder();
-        sb.append(Long.toString(sequenceNumber));
+        sb.append(generateMessage(sequenceNumber));
+        /*sb.append(Long.toString(sequenceNumber));
         sb.append(" ");
-        sb.append(send(to, from, subject, context));
-        /*while (sb.length() < totalLen) {
+        while (sb.length() < totalLen) {
             sb.append("a");
         }*/
         try {
@@ -79,11 +69,27 @@ public class Utils {
         }
     }
 
-    private static String send(String from, String to, String subject, String text) {
+    private static String generateMessage(long sequenceNumber) {
         try {
+            String crlf = System.getProperty("line.separator");
+            String message =
+                "HELO myhostname.hogehoge.co.jp" + crlf +
+                "MAIL FROM: username@hogehoge.co.jp" + crlf +
+                "RCPT TO: abcedfgh@hogehoge.co.jp" + crlf +
+                "DATA" + crlf +
+                "To: abcdefgh@hogehoge.co.jp" + crlf +
+                "Subject: test mail no " + Long.toString(sequenceNumber) + crlf +
+                "From: username@hogehoge.co.jp" + crlf + crlf +
+                "this is test mail." + crlf + crlf +
+                "ダミーデータなので返信はしないでください。" + crlf +
+                "." + crlf +
+                "QUIT" + crlf
+                ;
+            return message;
+            /*
             Properties prop = new Properties();
             prop.put("mail.smtp.host", "localhost");
-            prop.put("mail.smtp.port", "localhost");
+            prop.put("mail.smtp.port", "25");
             Session session = Session.getDefaultInstance(prop);
             MimeMessage mime = new MimeMessage(session);
             mime.addFrom(InternetAddress.parse(from));
@@ -93,6 +99,7 @@ public class Utils {
             mime.setText(text);
             mime.setSentDate(new Date());
             return mime.toString();
+            */
         } catch(Exception e) {
             e.printStackTrace();
         }

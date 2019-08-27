@@ -213,7 +213,7 @@ public class SampleProducer {
             @Override
             public void run() {
                 ByteBuffer data = Utils.generateData(sequenceNumber.get(), DATA_SIZE);
-                log.info(StandardCharsets.UTF_8.decode(data).toString());
+                //log.info(StandardCharsets.UTF_8.decode(data).toString());
                 // TIMESTAMP is our partition key
                 ListenableFuture<UserRecordResult> f =
                         producer.addUserRecord(STREAM_NAME, TIMESTAMP, Utils.randomExplicitHashKey(), data);
