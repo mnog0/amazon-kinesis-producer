@@ -57,7 +57,7 @@ public class Utils {
     public static ByteBuffer generateData(long sequenceNumber, int totalLen) {
         StringBuilder sb = new StringBuilder();
         sb.append(Long.toString(sequenceNumber));
-        sb.append(" ");
+        sb.append("#");
         sb.append(generateMessage(sequenceNumber));
         /*while (sb.length() < totalLen) {
             sb.append("a");
