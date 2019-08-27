@@ -47,9 +47,24 @@ public class Utils {
         StringBuilder sb = new StringBuilder();
         sb.append(Long.toString(sequenceNumber));
         sb.append(" ");
-        while (sb.length() < totalLen) {
-            sb.append("a");
-        }
+        String crlf = System.getProperty("line.separator");
+        String message =
+            "HELO myhostname.hogehoge.co.jp" + crlf +
+            "MAIL FROM: username@hogehoge.co.jp" + crlf +
+            "RCPT TO: abcedfgh@hogehoge.co.jp" + crlf +
+            "DATA" + crlf +
+            "To: abcdefgh@hogehoge.co.jp" + crlf +
+            "Subject: test mail no " + Long.toString(sequenceNumber) + crlf +
+            "From: username@hogehoge.co.jp" + crlf + crlf +
+            "this is test mail." + crlf + crlf +
+            "ダミーデータなので返信はしないでください。" + crlf +
+            "." + crlf +
+            "QUIT" + crlf
+            ;
+        sb.append(message);
+        //while (sb.length() < totalLen) {
+        //    sb.append("a");
+        //}
         try {
             return ByteBuffer.wrap(sb.toString().getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {

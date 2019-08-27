@@ -182,9 +182,11 @@ public class SampleConsumer implements IRecordProcessorFactory {
                 last = sn;
             }
 
-            log.info(String.format(
+            if (gaps != 0) {
+                log.info(String.format(
                     "Found %d gaps in the sequence numbers. Lowest seen so far is %d, highest is %d",
                     gaps, sequenceNumbers.get(0), sequenceNumbers.get(sequenceNumbers.size() - 1)));
+            }
         }
     }
 
