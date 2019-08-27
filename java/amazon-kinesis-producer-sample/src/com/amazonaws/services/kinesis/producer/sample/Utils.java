@@ -58,10 +58,10 @@ public class Utils {
         StringBuilder sb = new StringBuilder();
         sb.append(Long.toString(sequenceNumber));
         sb.append("#");
-        sb.append(generateMessage(sequenceNumber));
-        /*while (sb.length() < totalLen) {
+        //sb.append(generateMessage(sequenceNumber));
+        while (sb.length() < totalLen) {
             sb.append("a");
-        }*/
+        }
         try {
             return ByteBuffer.wrap(sb.toString().getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
