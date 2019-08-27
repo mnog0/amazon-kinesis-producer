@@ -71,7 +71,7 @@ public class Utils {
 
     private static String generateMessage(long sequenceNumber) {
         try {
-            String crlf = System.getProperty("line.separator");
+            String crlf = ""; //System.getProperty("line.separator");
             String message =
                 "HELO myhostname.hogehoge.co.jp" + crlf +
                 "MAIL FROM: username@hogehoge.co.jp" + crlf +
