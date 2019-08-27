@@ -56,10 +56,10 @@ public class Utils {
      */
     public static ByteBuffer generateData(long sequenceNumber, int totalLen) {
         StringBuilder sb = new StringBuilder();
-        sb.append(generateMessage(sequenceNumber));
-        /*sb.append(Long.toString(sequenceNumber));
+        sb.append(Long.toString(sequenceNumber));
         sb.append(" ");
-        while (sb.length() < totalLen) {
+        sb.append(generateMessage(sequenceNumber));
+        /*while (sb.length() < totalLen) {
             sb.append("a");
         }*/
         try {
