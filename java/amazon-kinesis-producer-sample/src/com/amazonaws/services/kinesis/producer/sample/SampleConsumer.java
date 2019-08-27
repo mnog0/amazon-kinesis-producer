@@ -117,13 +117,9 @@ public class SampleConsumer implements IRecordProcessorFactory {
                     byte[] b = new byte[r.getData().remaining()];
                     r.getData().get(b);
                     String message = new String(b, "UTF-8");
-                    long seq = Long.parseLong(message.split(" ")[0]);
-<<<<<<< HEAD
+                    String seq = message.split(" ")[0];
                     log.info("seq : ", seq);
-=======
-                    log.info(seq);
->>>>>>> f269f4284f9567298d7738fd82e55850b8999fba
-                    seqNos.add(seq);
+                    seqNos.add(Long.parseLong(seq));
                 } catch (Exception e) {
                     log.error("Error parsing record", e);
                     System.exit(1);
