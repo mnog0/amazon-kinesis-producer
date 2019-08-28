@@ -76,9 +76,11 @@ public class Utils {
             "QUIT" + crlf
             ;
         sb.append(message);
+
         //while (sb.length() < totalLen) {
         //    sb.append("a");
         //}
+
         try {
             return ByteBuffer.wrap(sb.toString().getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {

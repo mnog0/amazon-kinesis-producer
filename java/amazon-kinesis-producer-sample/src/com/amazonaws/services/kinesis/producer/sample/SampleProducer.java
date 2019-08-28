@@ -75,12 +75,12 @@ public class SampleProducer {
     /**
      * Change these to try larger or smaller records.
      */
-    private static final int DATA_SIZE = 128;
+    private static final int DATA_SIZE = 2048;
 
     /**
      * Put records for this number of seconds before exiting.
      */
-    private static final int SECONDS_TO_RUN = 30;
+    private static final int SECONDS_TO_RUN = 10;
 
     /**
      * Put this number of records per second.
@@ -259,6 +259,8 @@ public class SampleProducer {
         // This kills the child process and shuts down the threads managing it.
         producer.destroy();
         log.info("Finished.");
+
+        System.exit(0);
     }
 
     /**
