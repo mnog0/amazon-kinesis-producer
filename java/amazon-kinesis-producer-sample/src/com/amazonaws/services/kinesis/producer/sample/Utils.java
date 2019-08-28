@@ -20,6 +20,7 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.Random;
 
+/*
 import java.util.Properties;
 import java.util.Date;
 
@@ -31,6 +32,7 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.internet.AddressException;
 import javax.mail.MessagingException;
 import javax.mail.Message;
+*/
 
 public class Utils {
     private static final Random RANDOM = new Random();
@@ -101,7 +103,8 @@ public class Utils {
      *            mail body text
      * @return MimeMessage Object or null=error
      */
-    private static MimeMessage generateMimeMessage(String host, String port, String from, String to, String subject, String text) {
+     /*
+     private static MimeMessage generateMimeMessage(String host, String port, String from, String to, String subject, String text) {
         try {
             Properties prop = new Properties();
             prop.put("mail.smtp.host", host);
@@ -122,4 +125,5 @@ public class Utils {
         }
         return null;
     }
+    */
 }

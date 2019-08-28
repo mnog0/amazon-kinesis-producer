@@ -208,7 +208,6 @@ public class SampleConsumer implements IRecordProcessorFactory {
     }
 
     public static void main(String[] args) {
-        try {
             //String workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
 
             KinesisClientLibConfiguration config =
@@ -235,9 +234,5 @@ public class SampleConsumer implements IRecordProcessorFactory {
                 .build()
                 .run();
 
-        //} catch (IOException e) {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
