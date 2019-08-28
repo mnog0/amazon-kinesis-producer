@@ -124,7 +124,7 @@ public class SampleConsumer implements IRecordProcessorFactory {
 
                     // temp: select keywork from knowledge
                     String keyword = "0000";
-                    if (message.indexOf(keyword)) { log.info(message); }
+                    if (message.indexOf(keyword) != -1) { log.info(message); }
 
                     //log.info(seq);
                     log.debug(message);
