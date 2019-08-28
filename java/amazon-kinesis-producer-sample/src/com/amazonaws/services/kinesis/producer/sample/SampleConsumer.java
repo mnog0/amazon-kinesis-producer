@@ -121,8 +121,12 @@ public class SampleConsumer implements IRecordProcessorFactory {
                     r.getData().get(b);
                     String message = new String(b, "UTF-8");
                     String seq = message.split(" ")[0];
-                    if (message.matches("0000")) { log.info(message); }
-                    log.info(seq);
+
+                    // temp: select keywork from knowledge
+                    String keyword = "0000";
+                    if (message.indexOf(keyword)) { log.info(message); }
+
+                    //log.info(seq);
                     log.debug(message);
                     seqNos.add(Long.parseLong(seq));
                 } catch (Exception e) {
@@ -204,28 +208,36 @@ public class SampleConsumer implements IRecordProcessorFactory {
     }
 
     public static void main(String[] args) {
-        KinesisClientLibConfiguration config =
-                new KinesisClientLibConfiguration(
-                        "KinesisProducerLibSampleConsumer",
-                        SampleProducer.STREAM_NAME,
-                        new DefaultAWSCredentialsProviderChain(),
-                        "KinesisProducerLibSampleConsumer")
-                                .withRegionName(SampleProducer.REGION)
-                                .withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON);
+        try {
+            //String workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
 
-        final SampleConsumer consumer = new SampleConsumer();
+            KinesisClientLibConfiguration config =
+                    new KinesisClientLibConfiguration(
+                            "KinesisProducerLibSampleConsumer",
+                            SampleProducer.STREAM_NAME,
+                            new DefaultAWSCredentialsProviderChain(),
+                            "KinesisProducerLibSampleConsumer")
+                                    .withRegionName(SampleProducer.REGION)
+                                    .withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON);
 
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                consumer.logResults();
-            }
-        }, 10, 1, TimeUnit.SECONDS);
+            final SampleConsumer consumer = new SampleConsumer();
 
-        new Worker.Builder()
-            .recordProcessorFactory(consumer)
-            .config(config)
-            .build()
-            .run();
+            Executors.newScheduledThreadPool(1).scheduleAtFixedRate(new Runnable() {
+                @Override
+                public void run() {
+                    consumer.logResults();
+                }
+            }, 10, 1, TimeUnit.SECONDS);
+
+            new Worker.Builder()
+                .recordProcessorFactory(consumer)
+                .config(config)
+                .build()
+                .run();
+
+        //} catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
