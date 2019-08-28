@@ -121,6 +121,7 @@ public class SampleConsumer implements IRecordProcessorFactory {
                     r.getData().get(b);
                     String message = new String(b, "UTF-8");
                     String seq = message.split(" ")[0];
+                    if (message.matches("0000")) { log.info(message); }
                     log.info(seq);
                     log.debug(message);
                     seqNos.add(Long.parseLong(seq));
