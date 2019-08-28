@@ -124,10 +124,10 @@ public class SampleConsumer implements IRecordProcessorFactory {
 
                     // temp: select keywork from knowledge
                     String keyword = "0000";
-                    if (message.indexOf(keyword) != -1) { log.info(message); }
+                    if (message.indexOf("000") != -1) { log.info(seq); }
+                    if (message.indexOf("0000") != -1) { log.info(message); }
 
-                    //log.info(seq);
-                    log.debug(message);
+                    //log.debug(message);
                     seqNos.add(Long.parseLong(seq));
                 } catch (Exception e) {
                     log.error("Error parsing record", e);
