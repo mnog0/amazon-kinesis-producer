@@ -20,6 +20,18 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.Random;
 
+import java.util.Properties;
+import java.util.Date;
+
+import javax.mail.Session;
+import javax.mail.Address;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.PasswordAuthentication;
+import javax.mail.internet.AddressException;
+import javax.mail.MessagingException;
+import javax.mail.Message;
+
 public class Utils {
     private static final Random RANDOM = new Random();
 
@@ -70,5 +82,44 @@ public class Utils {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Generates a MimeMessage.
+     *
+     * @param host
+     *            SMTP Server hostname
+     * @param port
+     *            SMTP Server port
+     * @param from
+     *            mail from
+     * @param to
+     *            mail to
+     * @param subject
+     *            mail subject
+     * @param text
+     *            mail body text
+     * @return MimeMessage Object or null=error
+     */
+    private static MimeMessage generateMimeMessage(String host, String port, String from, String to, String subject, String text) {
+        try {
+            Properties prop = new Properties();
+            prop.put("mail.smtp.host", host);
+            prop.put("mail.smtp.port", port);
+
+            Session session = Session.getDefaultInstance(prop);
+            MimeMessage mime = new MimeMessage(session);
+            mime.addFrom(InternetAddress.parse(from));
+            Address[] tos = { new InternetAddress(to) };
+            mime.setRecipients(Message.RecipientType.TO, tos);
+            mime.setSubject(subject, "iso-2022-jp");
+            mime.setText(text);
+            mime.setSentDate(new Date());
+
+            return mime;
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
