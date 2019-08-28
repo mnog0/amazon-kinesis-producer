@@ -204,36 +204,28 @@ public class SampleConsumer implements IRecordProcessorFactory {
     }
 
     public static void main(String[] args) {
-        try {
-            //String workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
+        KinesisClientLibConfiguration config =
+                new KinesisClientLibConfiguration(
+                        "KinesisProducerLibSampleConsumer",
+                        SampleProducer.STREAM_NAME,
+                        new DefaultAWSCredentialsProviderChain(),
+                        "KinesisProducerLibSampleConsumer")
+                                .withRegionName(SampleProducer.REGION)
+                                .withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON);
 
-            KinesisClientLibConfiguration config =
-                    new KinesisClientLibConfiguration(
-                            "KinesisProducerLibSampleConsumer",
-                            SampleProducer.STREAM_NAME,
-                            new DefaultAWSCredentialsProviderChain(),
-                            "KinesisProducerLibSampleConsumer")
-                                    .withRegionName(SampleProducer.REGION)
-                                    .withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON);
+        final SampleConsumer consumer = new SampleConsumer();
 
-            final SampleConsumer consumer = new SampleConsumer();
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                consumer.logResults();
+            }
+        }, 10, 1, TimeUnit.SECONDS);
 
-            Executors.newScheduledThreadPool(1).scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    consumer.logResults();
-                }
-            }, 10, 1, TimeUnit.SECONDS);
-
-            new Worker.Builder()
-                .recordProcessorFactory(consumer)
-                .config(config)
-                .build()
-                .run();
-
-        //} catch (IOException e) {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        new Worker.Builder()
+            .recordProcessorFactory(consumer)
+            .config(config)
+            .build()
+            .run();
     }
 }
