@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.UUID;
 import java.io.IOException;
-import java.net.InetAddress;
+//import java.net.InetAddress;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -204,14 +204,14 @@ public class SampleConsumer implements IRecordProcessorFactory {
 
     public static void main(String[] args) {
         try {
-            String workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
+            //String workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
 
             KinesisClientLibConfiguration config =
                     new KinesisClientLibConfiguration(
                             "KinesisProducerLibSampleConsumer",
                             SampleProducer.STREAM_NAME,
                             new DefaultAWSCredentialsProviderChain(),
-                            workerId)
+                            "KinesisProducerLibSampleConsumer")
                                     .withRegionName(SampleProducer.REGION)
                                     .withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON);
 
@@ -230,7 +230,8 @@ public class SampleConsumer implements IRecordProcessorFactory {
                 .build()
                 .run();
 
-        } catch (IOException e) {
+        //} catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
