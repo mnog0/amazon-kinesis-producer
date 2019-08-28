@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.UUID;
+import java.io.IOException;
+import java.net.InetAddress;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -200,28 +203,35 @@ public class SampleConsumer implements IRecordProcessorFactory {
     }
 
     public static void main(String[] args) {
-        KinesisClientLibConfiguration config =
-                new KinesisClientLibConfiguration(
-                        "KinesisProducerLibSampleConsumer",
-                        SampleProducer.STREAM_NAME,
-                        new DefaultAWSCredentialsProviderChain(),
-                        "KinesisProducerLibSampleConsumer")
-                                .withRegionName(SampleProducer.REGION)
-                                .withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON);
+        try {
+            String workerId = InetAddress.getLocalHost().getCanonicalHostName() + ":" + UUID.randomUUID();
 
-        final SampleConsumer consumer = new SampleConsumer();
+            KinesisClientLibConfiguration config =
+                    new KinesisClientLibConfiguration(
+                            "KinesisProducerLibSampleConsumer",
+                            SampleProducer.STREAM_NAME,
+                            new DefaultAWSCredentialsProviderChain(),
+                            workerId)
+                                    .withRegionName(SampleProducer.REGION)
+                                    .withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON);
 
-        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                consumer.logResults();
-            }
-        }, 10, 1, TimeUnit.SECONDS);
+            final SampleConsumer consumer = new SampleConsumer();
 
-        new Worker.Builder()
-            .recordProcessorFactory(consumer)
-            .config(config)
-            .build()
-            .run();
+            Executors.newScheduledThreadPool(1).scheduleAtFixedRate(new Runnable() {
+                @Override
+                public void run() {
+                    consumer.logResults();
+                }
+            }, 10, 1, TimeUnit.SECONDS);
+
+            new Worker.Builder()
+                .recordProcessorFactory(consumer)
+                .config(config)
+                .build()
+                .run();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
