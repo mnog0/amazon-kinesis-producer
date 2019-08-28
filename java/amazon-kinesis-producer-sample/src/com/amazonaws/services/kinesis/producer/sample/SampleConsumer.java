@@ -126,7 +126,7 @@ public class SampleConsumer implements IRecordProcessorFactory {
                     String keyword = "0000";
                     if (message.indexOf(keyword) != -1) { log.info(message); }
 
-                    log.info(seq);
+                    //log.info(seq);
                     log.debug(message);
                     seqNos.add(Long.parseLong(seq));
                 } catch (Exception e) {
