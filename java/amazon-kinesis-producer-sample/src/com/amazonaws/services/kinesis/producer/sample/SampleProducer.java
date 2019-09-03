@@ -80,7 +80,7 @@ public class SampleProducer {
     /**
      * Put records for this number of seconds before exiting.
      */
-    private static final int SECONDS_TO_RUN = 60;
+    private static final int SECONDS_TO_RUN = 180;
 
     /**
      * Put this number of records per second.
